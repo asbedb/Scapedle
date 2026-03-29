@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Keyboard from './Keyboard.svelte';
 
-	let { word, extraHint = '' } = $props<{ word: string; extraHint?: string }>();
+	let {
+		word,
+		extraHint,
+		wordNumber = ''
+	} = $props<{ word: string; extraHint?: string; wordNumber?: number }>();
 
 	// State
 	let guesses = $state<string[]>([]);
@@ -152,11 +156,11 @@
 
 	async function shareResults() {
 		const score = gameStatus === 'won' ? guesses.length : 'X';
-		const text = `RS Wordle ${score}/${MAX_GUESSES}\n\n${generateEmojiGrid()}\n\nPlay at: wordcape.com`;
+		const text = `Scapedle\nAn OSRS Inspired Wordle ${score}/${MAX_GUESSES}\n\nWord #${wordNumber}\n\n${generateEmojiGrid()}\n\nPlay at: scapedle.com`;
 		if (navigator.share) {
 			try {
 				await navigator.share({
-					title: 'WordCape an OSRS Inspired Wordle',
+					title: 'ScapeDle an OSRS Inspired Wordle Game',
 					text: text
 				});
 				return;
@@ -211,9 +215,9 @@
 		</div>
 	{/if}
 
-	<div class="mb-8 flex flex-col gap-2">
+	<div class="mb-8 flex w-full flex-col gap-2 px-2">
 		{#each rows as r (r)}
-			<div class="flex justify-center gap-1.5 sm:gap-2">
+			<div class="flex justify-center gap-1 sm:gap-2">
 				{#each cols as c (c)}
 					{@const letter = getLetterAt(r, c)}
 					{@const isCharSpecial = isSpecial(word[c])}
@@ -221,11 +225,11 @@
 					{@const isCurrent = r === guesses.length}
 
 					<div
-						class="flex h-10 w-10 items-center justify-center border-2 text-xl font-bold uppercase transition-all duration-500 sm:h-12 sm:w-12 sm:text-2xl
-                        {isSubmitted && !isCharSpecial ? getBoxStatus(guesses[r], c) : ''}
-                        {isCurrent && !isCharSpecial ? 'border-zinc-400 bg-zinc-800/50' : ''}
-                        {!isSubmitted && !isCurrent && !isCharSpecial ? 'border-zinc-600' : ''}
-                        {isCharSpecial ? 'border-none text-zinc-500' : ''}"
+						class="flex aspect-square w-full max-w-[3rem] items-center justify-center border-2 text-lg font-bold uppercase transition-all duration-500 sm:h-12 sm:w-12 sm:text-2xl
+                    {isSubmitted && !isCharSpecial ? getBoxStatus(guesses[r], c) : ''}
+                    {isCurrent && !isCharSpecial ? 'border-zinc-400 bg-zinc-800/50' : ''}
+                    {!isSubmitted && !isCurrent && !isCharSpecial ? 'border-zinc-600' : ''}
+                    {isCharSpecial ? 'border-none text-zinc-500' : ''}"
 					>
 						{letter || ''}
 					</div>
@@ -239,7 +243,7 @@
 			<div
 				class="flex w-full flex-col items-center gap-4 rounded-lg border-2 border-osrs-yellow bg-zinc-900 p-6 text-center shadow-xl"
 			>
-				<h2 class="text-2xl font-bold tracking-tighter text-white uppercase">
+				<h2 class="text-2xl tracking-tighter text-white uppercase">
 					{gameStatus === 'won' ? '📜 Quest Completed 📜' : '💀 Back to Lumby 💀'}
 				</h2>
 				<p class="text-zinc-400">

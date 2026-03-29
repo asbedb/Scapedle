@@ -18,7 +18,6 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter({
-			// default output directory is 'build'
 			pages: 'build',
 			assets: 'build',
 			fallback: '404.html',
@@ -26,7 +25,7 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/wordcape' : ''
+			base: ''
 		}
 	}
 };

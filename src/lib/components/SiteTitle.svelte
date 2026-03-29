@@ -3,8 +3,8 @@
 	import RoundedFrame from './RoundedFrame.svelte';
 </script>
 
-<div class=" flex w-full flex-col items-center justify-center bg-osrs-dark-brown p-8 text-center">
-	<div class="flex gap-4 text-7xl">
+<div class=" flex w-full flex-col items-center justify-center bg-osrs-dark-brown p-8">
+	<div class="flex items-center gap-4">
 		<RoundedFrame>
 			<img
 				src={spellBook}
@@ -14,7 +14,7 @@
 				height="50"
 			/>
 		</RoundedFrame>
-		<h1 class="">WordCape</h1>
+		<h1 class="text-6xl">Scapedle</h1>
 	</div>
-	<div class="text-lg text-osrs-red">A osrs based wordle</div>
+	<div class="font-osrs-small text-lg text-osrs-red">A osrs based wordle</div>
 </div>

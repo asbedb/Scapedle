@@ -4,8 +4,11 @@ export const load = () => {
 	const dayOfYear = Math.floor(
 		(Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
 	);
-	const dailyWord = WORD_LIST[dayOfYear % WORD_LIST.length];
+	const wordNumber: number = dayOfYear % WORD_LIST.length;
+	const dailyWord = WORD_LIST[wordNumber];
+
 	return {
-		xgha: dailyWord
+		xgha: dailyWord,
+		wordNumber: wordNumber
 	};
 };
