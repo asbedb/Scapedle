@@ -152,24 +152,19 @@
 
 	async function shareResults() {
 		const score = gameStatus === 'won' ? guesses.length : 'X';
-		const text = `RS Wordle ${score}/${MAX_GUESSES}\n\n${generateEmojiGrid()}\n\nPlay at: yoursite.com`;
-
-		// 1. Try Native Sharing first (Mobile)
+		const text = `RS Wordle ${score}/${MAX_GUESSES}\n\n${generateEmojiGrid()}\n\nPlay at: wordcape.com`;
 		if (navigator.share) {
 			try {
 				await navigator.share({
-					title: 'RS Wordle',
+					title: 'WordCape an OSRS Inspired Wordle',
 					text: text
 				});
-				return; // If successful, stop here
+				return;
 			} catch (err) {
-				// If user cancels the share sheet, don't show an error
 				if ((err as Error).name === 'AbortError') return;
 				console.error('Share failed, falling back to clipboard', err);
 			}
 		}
-
-		// 2. Fallback to Clipboard (Desktop or if Share fails/is unsupported)
 		try {
 			await navigator.clipboard.writeText(text);
 			copied = true;
@@ -177,7 +172,6 @@
 				copied = false;
 			}, 2000);
 		} catch (err) {
-			// 3. Ultimate Fallback: Alert (Last resort for very old mobile browsers)
 			console.error('Clipboard failed', err);
 			alert('Copy failed. Please try again or use a modern browser.');
 		}
