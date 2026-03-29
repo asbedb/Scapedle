@@ -1,0 +1,58 @@
+name: Deploy OSRS Guessing Game
+
+on:
+  # Runs at 00:00 UTC every day (Daily Word Reset)
+  schedule:
+    - cron: '0 0 * * *'
+  # Runs on every push to the main branch
+  push:
+    branches: ['main']
+  # Allows manual triggers from the "Actions" tab
+  workflow_dispatch:
+
+# Permissions needed to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # Change to 'pnpm' or 'yarn' if you use those
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+        env:
+          # If your load function uses secret keys or specific env vars,
+          # add them here.
+          NODE_ENV: production
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Must match the 'pages' folder in your svelte.config.js
+          path: './build'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
