@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@font-face {
+	font-family: 'RuneScape Small';
+	src: url('../lib/assets/fonts/rs-small.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'RuneScape UF';
+	src: url('../lib/assets/fonts/rs-uf.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-osrs-small: 'RuneScape Small', ui-sans-serif;
+	--font-osrs: 'RuneScape UF', ui-sans-serif;
+	--color-osrs-yellow: #ffcf3f;
+	--color-osrs-gold: #e6a519;
+	--color-osrs-brown: #694d23;
+	--color-osrs-dark-brown: #382d1a;
+	--color-osrs-black: #0f0f0f;
+	--color-osrs-green: #00ff00;
+	--color-osrs-red: #ff0000;
+	--color-osrs-blue: #0088ff;
+	--color-osrs-chat: #00ffff;
+	--color-osrs-background: #2e2c29;
+	--color-osrs-border: #474745;
+	--color-osrs-panel: #46433a;
+}
+
+.pixel-art {
+	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+}
