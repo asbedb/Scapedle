@@ -16,5 +16,5 @@
 		</RoundedFrame>
 		<h1 class="text-6xl">Scapedle</h1>
 	</div>
-	<div class="font-osrs-small text-lg text-osrs-red">A osrs based wordle</div>
+	<div class="font-osrs-small text-lg text-osrs-red">An osrs based wordle</div>
 </div>

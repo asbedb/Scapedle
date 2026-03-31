@@ -4,6 +4,7 @@
 	const emojiHint = $derived(data.emojiHint);
 	const wordHint = $derived(data.wordHint);
 	const wordNumber = $derived(data.wordNumber);
+	const dictionary = $derived(data.dictionary);
 	import SiteTitle from '$lib/components/SiteTitle.svelte';
 	import Timer from '$lib/components/Timer.svelte';
 	import WordMatch from '$lib/components/WordMatch.svelte';
@@ -15,6 +16,6 @@
 		<Timer />
 		<span class="text-3xl">Emoji Hint: {emojiHint}</span>
 		<span class="text-xl text-osrs-yellow">Word #{wordNumber}</span>
-		<WordMatch word={solution} extraHint={wordHint} {wordNumber} />
+		<WordMatch word={solution} {wordHint} {wordNumber} {dictionary} />
 	</div>
 </div>

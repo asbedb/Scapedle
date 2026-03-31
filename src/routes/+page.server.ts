@@ -15,10 +15,32 @@ export const load = () => {
 	const randomIndex: number = Math.floor(getSeededRandom(seed) * WORD_LIST.length);
 
 	const dailyWord = WORD_LIST[randomIndex];
+	// Generates a hashmap of individual words extracted from our wordList to optimize searches.
+	// Key = word length, Value = array of unique uppercase words.
+	const dictionary = WORD_LIST.reduce(
+		(acc, item) => {
+			const individualWords = item.itemName.toUpperCase().split(/\s+/);
+			individualWords.forEach((word) => {
+				const cleanWord = word;
+				const len = cleanWord.length;
+				if (len > 0) {
+					if (!acc[len]) {
+						acc[len] = [];
+					}
+					if (!acc[len].includes(cleanWord)) {
+						acc[len].push(cleanWord);
+					}
+				}
+			});
 
+			return acc;
+		},
+		{} as Record<number, string[]>
+	);
 	return {
 		...dailyWord,
 		itemName: btoa(dailyWord.itemName),
-		wordNumber: dayOfYear
+		wordNumber: dayOfYear,
+		dictionary
 	};
 };
