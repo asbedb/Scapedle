@@ -4,14 +4,10 @@
 	let timeLeft = $state('00:00:00');
 	function updateCountdown() {
 		const now = new SvelteDate();
-
-		// 3. Initialize target as a SvelteDate at 14:00 UTC today
 		let target = new SvelteDate(
-			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 14, 0, 0)
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0)
 		);
 
-		// 4. If we passed 14:00 UTC, mutate the target safely
-		// SvelteDate tracks this .setUTCDate call reactively!
 		if (now.getTime() >= target.getTime()) {
 			target.setUTCDate(target.getUTCDate() + 1);
 		}
