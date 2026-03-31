@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Keyboard from './Keyboard.svelte';
 
 	let {
-		word,
+		word: encodedWord,
 		extraHint,
 		wordNumber = ''
 	} = $props<{ word: string; extraHint?: string; wordNumber?: number }>();
-
+	const word = $derived(atob(encodedWord));
 	// State
 	let guesses = $state<string[]>([]);
 	let currentGuess = $state('');
@@ -20,7 +21,7 @@
 	const MAX_GUESSES = 5;
 	const BLANK_GUESS = '_BLANK_';
 	const isSpecial = (char: string) => !/[a-zA-Z]/.test(char);
-
+	const STORAGE_KEY = 'scapdle';
 	// Derived Values
 	const targetAlpha = $derived(word.replace(/[^a-zA-Z]/g, '').toUpperCase());
 	const rows = $derived(Array.from({ length: MAX_GUESSES }, (_, i) => i));
@@ -48,11 +49,38 @@
 		return statuses;
 	});
 
+	// Mounts and Effects
+	onMount(() => {
+		const saved = localStorage.getItem(STORAGE_KEY);
+		if (saved) {
+			const data = JSON.parse(saved);
+			if (data.wordNumber === wordNumber) {
+				guesses = data.guesses || [];
+				hintUsed = data.hintUsed || false;
+				gameStarted = data.gameStarted || false;
+			} else {
+				localStorage.removeItem(STORAGE_KEY);
+			}
+		}
+	});
+	$effect(() => {
+		if (gameStarted || guesses.length > 0) {
+			const stateToSave = {
+				wordNumber,
+				guesses: $state.snapshot(guesses),
+				hintUsed,
+				gameStarted
+			};
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+		}
+	});
 	$effect(() => {
 		if (guesses.includes(targetAlpha)) {
 			gameStatus = 'won';
 		} else if (guesses.length >= MAX_GUESSES) {
 			gameStatus = 'lost';
+		} else {
+			gameStatus = 'playing';
 		}
 	});
 
@@ -185,11 +213,57 @@
 <svelte:window onkeydown={handleKeyDown} />
 
 <main
-	class="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden bg-zinc-950 px-4 py-8 text-white select-none"
+	role="presentation"
+	class="relative flex min-h-screen w-full flex-col items-center gap-4 overflow-x-hidden bg-zinc-950 px-4 py-8 text-white select-none"
 	onclick={focusInput}
 	aria-label="OSRS Game Surface"
 	style="touch-action: manipulation;"
 >
+	{#if gameStatus !== 'playing'}
+		<div
+			class="flex max-w-1/2 flex-col items-center gap-4 rounded-lg border-2 border-osrs-yellow bg-zinc-900 p-6 text-center shadow-xl"
+		>
+			<h2 class="text-2xl tracking-tighter text-white uppercase">
+				{gameStatus === 'won' ? '📜 Quest Completed 📜' : '💀 Back to Lumby 💀'}
+			</h2>
+			<p class="text-zinc-400">
+				Word: <span class="font-mono font-bold tracking-widest text-white"
+					>{word.toUpperCase()}</span
+				>
+			</p>
+			<button
+				onclick={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					shareResults();
+				}}
+				class="w-full rounded {copied
+					? 'bg-zinc-500'
+					: 'bg-green-600'} py-3 font-bold text-white transition-all active:scale-95"
+			>
+				{copied ? '✅ COPIED' : 'SHARE RESULTS'}
+			</button>
+		</div>
+	{:else if extraHint}
+		<div class="flex flex-col items-center gap-2">
+			{#if !hintUsed}
+				<button
+					onclick={(e) => {
+						e.stopPropagation();
+						useHint();
+					}}
+					class="hover:bg- rounded-full border border-osrs-red bg-osrs-panel px-6 py-2 text-xs font-bold text-osrs-green transition-all hover:text-osrs-red active:scale-95"
+				>
+					PROMPT HINT (-1 GUESS)
+				</button>
+			{:else}
+				<div class="rounded border border-osrs-gold bg-osrs-panel px-6 py-3 text-center">
+					<p class="text-[10px] tracking-widest text-osrs-yellow uppercase">Hint Revealed</p>
+					<p class="text-lg font-bold uppercase">{extraHint}</p>
+				</div>
+			{/if}
+		</div>
+	{/if}
 	<input
 		bind:this={inputElement}
 		type="text"
@@ -239,52 +313,6 @@
 	</div>
 
 	<div class="flex w-full max-w-md flex-col items-center gap-6">
-		{#if gameStatus !== 'playing'}
-			<div
-				class="flex w-full flex-col items-center gap-4 rounded-lg border-2 border-osrs-yellow bg-zinc-900 p-6 text-center shadow-xl"
-			>
-				<h2 class="text-2xl tracking-tighter text-white uppercase">
-					{gameStatus === 'won' ? '📜 Quest Completed 📜' : '💀 Back to Lumby 💀'}
-				</h2>
-				<p class="text-zinc-400">
-					Word: <span class="font-mono font-bold tracking-widest text-white"
-						>{word.toUpperCase()}</span
-					>
-				</p>
-				<button
-					onclick={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						shareResults();
-					}}
-					class="w-full rounded {copied
-						? 'bg-zinc-500'
-						: 'bg-green-600'} py-3 font-bold text-white transition-all active:scale-95"
-				>
-					{copied ? '✅ COPIED' : 'SHARE RESULTS'}
-				</button>
-			</div>
-		{:else if extraHint}
-			<div class="flex flex-col items-center gap-2">
-				{#if !hintUsed}
-					<button
-						onclick={(e) => {
-							e.stopPropagation();
-							useHint();
-						}}
-						class="hover:bg- rounded-full border border-osrs-red bg-osrs-panel px-6 py-2 text-xs font-bold text-osrs-green transition-all hover:text-osrs-red active:scale-95"
-					>
-						PROMPT HINT (-1 GUESS)
-					</button>
-				{:else}
-					<div class="rounded border border-osrs-gold bg-osrs-panel px-6 py-3 text-center">
-						<p class="text-[10px] tracking-widest text-osrs-yellow uppercase">Hint Revealed</p>
-						<p class="text-lg font-bold uppercase">{extraHint}</p>
-					</div>
-				{/if}
-			</div>
-		{/if}
-
 		<div class="w-full {gameStatus !== 'playing' ? 'pointer-events-none opacity-50' : ''}">
 			<Keyboard onKey={handleInput} keyStates={charStatuses} />
 		</div>
