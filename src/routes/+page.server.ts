@@ -9,9 +9,21 @@ const getSeededRandom = (seed: number): number => {
 
 export const load = () => {
 	const now: Date = new Date();
-	const start: Date = new Date(now.getFullYear(), 0, 0);
-	const dayOfYear: number = Math.floor((now.getTime() - start.getTime()) / 86400000);
-	const seed: number = dayOfYear + now.getFullYear();
+	const formatter = new Intl.DateTimeFormat('en-AU', {
+		timeZone: 'Australia/Sydney',
+		year: 'numeric',
+		month: 'numeric',
+		day: 'numeric'
+	});
+	const parts = formatter.formatToParts(now);
+	const dateMap = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+	const year = parseInt(dateMap.year);
+	const month = parseInt(dateMap.month) - 1;
+	const day = parseInt(dateMap.day);
+	const aestToday = new Date(year, month, day);
+	const startOfYear = new Date(year, 0, 0);
+	const dayOfYear = Math.floor((aestToday.getTime() - startOfYear.getTime()) / 86400000);
+	const seed: number = dayOfYear + year;
 	const randomIndex: number = Math.floor(getSeededRandom(seed) * WORD_LIST.length);
 
 	const dailyWord = WORD_LIST[randomIndex];
@@ -19,7 +31,7 @@ export const load = () => {
 	// Key = word length, Value = array of unique uppercase words.
 	const dictionary = WORD_LIST.reduce(
 		(acc, item) => {
-			const individualWords = item.itemName.toUpperCase().split(/\s+/);
+			const individualWords = item.itemName.toUpperCase().replace(/'/g, '').split(/\s+/);
 			individualWords.forEach((word) => {
 				const cleanWord = word;
 				const len = cleanWord.length;

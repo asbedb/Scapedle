@@ -12,7 +12,7 @@
 		wordNumber?: number;
 		dictionary?: Record<number, string[]>;
 	}>();
-	const word = $derived(atob(encodedWord));
+	const word = $derived(atob(encodedWord).replace(/'/g, ''));
 	const targetParts = $derived(word.toUpperCase().split(/\s+/));
 	const totalExpectedLength = $derived(targetParts.join('').length);
 	// State
@@ -144,7 +144,8 @@
 				let currentIndex: number = 0;
 				let isEntireGuessValid: boolean = true;
 				for (const part of targetParts) {
-					const partLength = part.length;
+					const cleanPart = part.replace(/[^A-Z]/g, '');
+					const partLength = cleanPart.length;
 					const guessChunk = currentGuess.slice(currentIndex, currentIndex + partLength);
 					const validWordsForLen = dictionary[partLength] || [];
 					if (!validWordsForLen.includes(guessChunk)) {
