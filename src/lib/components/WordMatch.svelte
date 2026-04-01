@@ -16,47 +16,6 @@
 	const targetAlpha = $derived(solution.replace(/[^a-zA-Z]/g, '').toUpperCase());
 	const rows = $derived(Array.from({ length: MAX_GUESSES }, (_, i) => i));
 	const cols = $derived(Array.from({ length: solution.length }, (_, i) => i));
-	let charStatuses = $derived.by(() => {
-		const statuses: Record<string, string> = {};
-		const targetAlphaCounts = getCounts(targetAlpha);
-		gameState.guesses.forEach((guess) => {
-			if (guess === BLANK_GUESS) return;
-			const usedCounts: Record<string, number> = {};
-			for (let i = 0; i < guess.length; i++) {
-				const char = guess[i];
-				if (char === targetAlpha[i]) {
-					statuses[char] = 'bg-green-600 border-green-600';
-					usedCounts[char] = (usedCounts[char] || 0) + 1;
-				}
-			}
-			for (let i = 0; i < guess.length; i++) {
-				const char = guess[i];
-				if (char === targetAlpha[i]) continue;
-
-				if (targetAlpha.includes(char)) {
-					const totalInTarget = targetAlphaCounts[char] || 0;
-					const usedSoFar = usedCounts[char] || 0;
-
-					if (usedSoFar < totalInTarget) {
-						if (statuses[char] !== 'bg-green-600 border-green-600') {
-							statuses[char] = 'bg-yellow-600 border-yellow-600';
-						}
-						usedCounts[char] = usedSoFar + 1;
-					} else {
-						if (!statuses[char]) {
-							statuses[char] = 'bg-zinc-800 border-zinc-800 opacity-40';
-						}
-					}
-				} else {
-					if (!statuses[char]) {
-						statuses[char] = 'bg-zinc-800 border-zinc-800 opacity-40';
-					}
-				}
-			}
-		});
-
-		return statuses;
-	});
 
 	// Mounts and Effects
 	onMount(() => {
@@ -203,14 +162,6 @@
 		}
 		return 'bg-zinc-700 border-zinc-700 text-zinc-400';
 	}
-	const getCounts = (str: string) => {
-		const counts: Record<string, number> = {};
-		for (const char of str) {
-			counts[char] = (counts[char] || 0) + 1;
-		}
-		return counts;
-	};
-
 	function generateEmojiGrid() {
 		return gameState.guesses
 			.map((guess) => {
@@ -334,7 +285,7 @@
 
 	<div class="flex w-full max-w-md flex-col items-center gap-6">
 		<div class="w-full {gameState.status !== 'playing' ? 'pointer-events-none opacity-50' : ''}">
-			<Keyboard onKey={handleInput} keyStates={charStatuses} />
+			<Keyboard onKey={handleInput} />
 		</div>
 
 		{#if gameData.wordHint}

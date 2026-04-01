@@ -12,6 +12,7 @@ export interface GameStateType {
 	status: 'playing' | 'won' | 'lost';
 	hintUsed: boolean;
 	gameStarted: boolean;
+	invalidWord: boolean;
 }
 
 let rawData = $state<ExternalData>({
@@ -51,7 +52,8 @@ export const gameState = $state<GameStateType>({
 	currentGuess: '',
 	status: 'playing',
 	hintUsed: false,
-	gameStarted: false
+	gameStarted: false,
+	invalidWord: false
 });
 
 export function initStore(data: ExternalData) {

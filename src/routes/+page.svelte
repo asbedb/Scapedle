@@ -4,8 +4,8 @@
 	import EmojiHint from '$lib/components/EmojiHint.svelte';
 	import SiteTitle from '$lib/components/SiteTitle.svelte';
 	import Timer from '$lib/components/Timer.svelte';
-	import WordMatch from '$lib/components/WordMatch.svelte';
 	import WordNumber from '$lib/components/WordNumber.svelte';
+	import GameBoard from '$lib/components/GameBoard.svelte';
 	initStore(data as ExternalData);
 </script>
 
@@ -15,6 +15,6 @@
 		<Timer />
 		<EmojiHint emojiHint={gameData.emojiHint} />
 		<WordNumber wordNumber={gameData.wordNumber} />
-		<WordMatch />
+		<GameBoard />
 	</div>
 </div>
