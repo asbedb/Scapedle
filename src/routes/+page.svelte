@@ -1,21 +1,20 @@
 <script lang="ts">
 	let { data } = $props();
-	const solution = $derived(data.itemName);
-	const emojiHint = $derived(data.emojiHint);
-	const wordHint = $derived(data.wordHint);
-	const wordNumber = $derived(data.wordNumber);
-	const dictionary = $derived(data.dictionary);
+	import { initStore, gameData, type ExternalData } from '$lib/stores/gameState.svelte';
+	import EmojiHint from '$lib/components/EmojiHint.svelte';
 	import SiteTitle from '$lib/components/SiteTitle.svelte';
 	import Timer from '$lib/components/Timer.svelte';
-	import WordMatch from '$lib/components/WordMatch.svelte';
+	import WordNumber from '$lib/components/WordNumber.svelte';
+	import GameBoard from '$lib/components/GameBoard.svelte';
+	initStore(data as ExternalData);
 </script>
 
 <div class="flex h-full w-full justify-center rounded-xl p-4">
 	<div class="flex h-full w-full flex-col items-center gap-4 rounded-xl bg-osrs-background">
 		<SiteTitle />
 		<Timer />
-		<span class="text-3xl">Emoji Hint: {emojiHint}</span>
-		<span class="text-xl text-osrs-yellow">Word #{wordNumber}</span>
-		<WordMatch word={solution} {wordHint} {wordNumber} {dictionary} />
+		<EmojiHint emojiHint={gameData.emojiHint} />
+		<WordNumber wordNumber={gameData.wordNumber} />
+		<GameBoard />
 	</div>
 </div>
