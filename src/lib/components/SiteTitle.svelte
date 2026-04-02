@@ -8,7 +8,7 @@
 		<RoundedFrame>
 			<img
 				src={spellBook}
-				alt="site icon"
+				alt="Scapedle Logo"
 				class="pixel-art h-full w-full object-contain pb-1"
 				width="50"
 				height="50"

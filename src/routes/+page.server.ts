@@ -25,7 +25,7 @@ export const load = () => {
 	const dayOfYear = Math.floor((aestToday.getTime() - startOfYear.getTime()) / 86400000);
 	const seed: number = dayOfYear + year;
 	const randomIndex: number = Math.floor(getSeededRandom(seed) * WORD_LIST.length);
-
+	let wordCount: number = 0;
 	const dailyWord = WORD_LIST[randomIndex];
 	// Generates a hashmap of individual words extracted from our wordList to optimize searches.
 	// Key = word length, Value = array of unique uppercase words.
@@ -41,6 +41,7 @@ export const load = () => {
 					}
 					if (!acc[len].includes(cleanWord)) {
 						acc[len].push(cleanWord);
+						wordCount++;
 					}
 				}
 			});
@@ -53,6 +54,7 @@ export const load = () => {
 		...dailyWord,
 		itemName: btoa(dailyWord.itemName),
 		wordNumber: dayOfYear,
-		dictionary
+		dictionary,
+		wordCount
 	};
 };
