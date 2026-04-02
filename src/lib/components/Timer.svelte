@@ -5,7 +5,7 @@
 	function updateCountdown() {
 		const now = new SvelteDate();
 		let target = new SvelteDate(
-			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0)
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 13, 0, 0)
 		);
 
 		if (now.getTime() >= target.getTime()) {
