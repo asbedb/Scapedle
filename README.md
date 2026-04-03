@@ -2,9 +2,9 @@
 
 ## Scapedle
 
-Scapedle was born from a simple desire: to combine the daily ritual of Wordle with the deep lore and nostalgia of Old School RuneScape (OSRS). What started as a weekend project for a small group of friends quickly evolved into a community-supported application with a growing player base.
-
 [Play it here!](https://www.scapedle.com)
+
+Scapedle was the idea of combining wordl with Old School RuneScape (OSRS). It started as a weekend MVP and quickly evolved into an application with a growing player base.
 
 ## Architecture and Technology
 

@@ -4,6 +4,7 @@ export interface ExternalData {
 	wordHint: string;
 	wordNumber: number;
 	dictionary: Record<number, string[]>;
+	wordCount: number;
 }
 
 export interface GameStateType {
@@ -20,7 +21,8 @@ let rawData = $state<ExternalData>({
 	emojiHint: '',
 	wordHint: '',
 	wordNumber: 0,
-	dictionary: {}
+	dictionary: {},
+	wordCount: 0
 });
 
 export const solution = {
@@ -44,6 +46,9 @@ export const gameData = {
 	},
 	get dictionary() {
 		return rawData.dictionary;
+	},
+	get wordCount() {
+		return rawData.wordCount;
 	}
 };
 
