@@ -4,24 +4,28 @@
 
 [Play it here!](https://www.scapedle.com)
 
-Scapedle was the idea of combining wordl with Old School RuneScape (OSRS). It started as a weekend MVP and quickly evolved into an application with a growing player base.
+[Join the discord](https://discord.gg/behPY8KUSM)
+
+Scapedle is the combination of wordle with Old School RuneScape (OSRS).
+
+It started as a weekend minimum viable product and quickly evolved into an application with a growing player base.
 
 ## Architecture and Technology
 
-Scapedles is built with [SvelteKit](https://svelte.dev/) and runs on the [Node.js](https://nodejs.org/en) runtime environment.
+Scapedle is built with [SvelteKit](https://svelte.dev/) and runs on the [Node.js](https://nodejs.org/en) runtime environment.
 
 ### Data and Dictionary Management
 
 The game's core logic revolves around a curated wordlist.
 
-- **Seeding:** The initial vocabulary was generated using Claude 3.5 Sonnet, then manually refined to ensure lore accuracy.
+- **Seeding:** The initial vocabulary was generated using Claude, and is currently being refined to ensure lore accuracy.
 - **Validation:** This wordlist is transformed into a HashMap, providing O(1) lookup times for validating user inputs against the dictionary
 
 ### Automated Daily Builds
 
 Rather than relying on a complex backend database to serve a new word, Scapedle utilizes a static-first deployment strategy:
 
-- **Scheduled CI/CD:** The project is rebuilt daily at 12:00 AM AEST.
+- **Scheduled CI/CD:** The project is rebuilt daily.
 - **Deterministic Seeding:** A custom algorithm uses the current date as a seed to select the "Daily Scape." This ensures a canonical order of game numbers and maintains synchronized play across the global community without needing a real-time server.
 
 ## Installation

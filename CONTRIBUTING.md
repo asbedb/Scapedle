@@ -1,5 +1,7 @@
 ## How to Contribute
 
+For further information or help getting started you can [join the discord](https://discord.gg/behPY8KUSM).
+
 ### Submitting an Issue
 
 If you’ve found a bug or have a brilliant idea for a new feature, please open an issue! High-quality issues make it much easier for the community to contribute.

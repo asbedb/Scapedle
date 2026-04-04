@@ -2,11 +2,9 @@ name: Deploy OSRS Guessing Game
 
 on:
   schedule:
-    - cron: '0 12 * * *'
-  # Runs on every push to the main branch
+    - cron: '30 12 * * *'
   push:
     branches: ['main']
-  # Allows manual triggers from the "Actions" tab
   workflow_dispatch:
 
 permissions:
