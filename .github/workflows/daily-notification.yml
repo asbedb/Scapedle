@@ -6,9 +6,6 @@ on:
     types: [completed]
 
 jobs:
-  discord-updates:
-    runs-on: ubuntu-latest
-
   on-success:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
@@ -16,5 +13,8 @@ jobs:
       - name: Send Success Message
         run: |
           curl -H "Content-Type: application/json" \
-               -d '{"content": "🗓️ A new daily Scapedle just went live!"}' \
+               -d '{
+                 "username": "Scapedle Announcer",
+                 "content": "🗓️ **A new daily Scapedle is live!** \nCheck it out here: https://scapedle.com"
+               }' \
                ${{ secrets.DAILY_WEBHOOK }}
