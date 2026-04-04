@@ -45,7 +45,6 @@ export const load = () => {
 					}
 				}
 			});
-
 			return acc;
 		},
 		{} as Record<number, string[]>

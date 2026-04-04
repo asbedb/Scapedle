@@ -1,0 +1,20 @@
+name: Daily Notifications
+
+on:
+  workflow_run:
+    workflows: ['Deploy OSRS Guessing Game']
+    types: [completed]
+
+jobs:
+  discord-updates:
+    runs-on: ubuntu-latest
+
+  on-success:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Send Success Message
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "🗓️ A new daily Scapedle just went live!"}' \
+               ${{ secrets.DAILY_WEBHOOK }}

@@ -1,0 +1,54 @@
+name: Github Notifications
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [closed]
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ['Deploy OSRS Guessing Game']
+    types: [completed]
+
+jobs:
+  discord-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue Opened
+        if: github.event_name == 'issues'
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "⚠️ **New Issue:** ${{ github.event.issue.title }}\n${{ github.event.issue.html_url }}"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
+      - name: PR Merged
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "🤝 **PR Merged:** ${{ github.event.pull_request.title }}\nMerged by: ${{ github.actor }}"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Commit to Main
+        if: github.event_name == 'push'
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "🚀 **New Commit to Main**\n`${{ github.event.head_commit.message }}`"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
+  on-success:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Send Success Message
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "✅Scapedle build completed successfully"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - name: Send Failure Message
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{"content": "🙈Scapedle build failed"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
