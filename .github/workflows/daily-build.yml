@@ -2,7 +2,7 @@ name: Deploy OSRS Guessing Game
 
 on:
   schedule:
-    - cron: '30 12 * * *'
+    - cron: '30 13 * * *'
   push:
     branches: ['main']
   workflow_dispatch:
