@@ -775,7 +775,7 @@ export const WORD_LIST = [
 	{ itemName: 'Soulreaper axe', emojiHint: '🪓💀👻✨🏆', wordHint: 'soul' },
 	{ itemName: 'Zombie axe', emojiHint: '🪓🧟💀✨⚔️', wordHint: 'undead' },
 	{ itemName: 'Scythe of vitur', emojiHint: '🌾💀🩸✨🏆', wordHint: 'tob' },
-	{ itemName: 'Dual macuahuitl', emojiHint: '⚔️🦷💀✨🏆', wordHint: 'toa' },
+	{ itemName: 'Dual macuahuitl', emojiHint: '⚔️🦷💀✨🏆', wordHint: 'Perilous Dual' },
 
 	// ============================================================
 	// SPECIAL / BOSS WEAPONS
