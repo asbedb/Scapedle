@@ -72,7 +72,12 @@ git push origin feat/your-feature-name
    - Navigate to the original Scapedle repository on GitHub. You should see a prompt to "Compare & pull request."
 
 3. PR Requirements
-   - When opening a PR, please ensure the following: - Title: Follow the Naming Conventions (e.g., fix: resolve mobile layout overlap). - Description: Reference the issue number you worked on (e.g., "Closes #12"). Provide a brief summary of what you changed. - Visuals: If your PR changes the UI, please include a screenshot or a screen recording of the change in action. - Clean Code: Ensure there are no unnecessary console.log statements or commented-out code blocks.
+   - When opening a PR, please ensure the following: - Title: Follow the Naming Conventions (e.g., fix: resolve mobile layout overlap).
+   - Description: Reference the issue number you worked on (e.g., "Closes #12"). Provide a brief summary of what you changed.
+   - Visuals: If your PR changes the UI, please include a screenshot or a screen recording of the change in action.
+   - Clean Code: Ensure there are no unnecessary console.log statements or commented-out code blocks.
 
 4. Review Process
-   - Once submitted, the maintainers will review your code. - Feedback: You might be asked to make small adjustments. Simply commit the changes to the same branch and push them; the PR will update automatically. - Approval: Once approved, your code will be merged into the main project and included in the next daily build!
+   - Once submitted, the maintainers will review your code.
+   - Feedback: You might be asked to make small adjustments. Simply commit the changes to the same branch and push them; the PR will update automatically.
+   - Approval: Once approved, your code will be merged into the main project and included in the next daily build!
