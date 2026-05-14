@@ -49,7 +49,7 @@ cd Scapedle
 3. Install Dependencies: Scapedle uses SvelteKit. Ensure you have Node.js installed, then run:
 
 ```Bash
-npm install
+pnpm install
 ```
 
 4. Create a Branch: Always work on a new branch rather than main. Use a name that reflects the issue - (see naming conventions below)[#naming-conventions]:
