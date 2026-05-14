@@ -35,6 +35,12 @@ Rather than relying on a complex backend database to serve a new word, Scapedle 
 - [Node.js](https://nodejs.org/en)
 - [git](https://www.atlassian.com/git/tutorials/install-git)
 
+Package management through PNPM
+
+```sh
+npm install -g pnpm
+```
+
 To install and run Scapedle locally ensure to first complete the prerequisites followed by the below.
 
 ### 1. (Optional) Fork the repository
@@ -66,15 +72,21 @@ This command opens the project folder where you'll find all the source code and 
 Run the following command in your terminal to install all the necessary packages defined in the project's package.json file:
 
 ```sh
-npm i
+pnpm i
 ```
 
-This command (shorthand for npm install) will automatically download and set up all required Node.js packages, including the NextJS framework and other dependencies needed for the front-end. The installation process may take several minutes depending on your internet connection speed.
+This command (shorthand for pnpm install) will automatically download and set up all required Node.js packages, including the NextJS framework and other dependencies needed for the front-end. The installation process may take several minutes depending on your internet connection speed.
+
+In addition you may need to approve the eslint plugin to build with the below command:
+
+```sh
+pnpm approve-builds
+```
 
 ### 7. Start the developer server
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 Open your browser and visit this displayed link in your console to see the application running.
