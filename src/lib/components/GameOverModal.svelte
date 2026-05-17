@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { gameState, gameData } from '$lib/stores/gameState.svelte';
 	import { MAX_GUESSES, BLANK_GUESS } from '$lib/constants';
-	let { solution, targetAlpha } = $props<{
-		solution: string;
-		targetAlpha: string;
-	}>();
+	const solution = $derived(gameData.decodedSolution);
+	const targetAlpha = $derived(gameData.targetAlpha);
 	let copied = $state(false);
 	function generateEmojiGrid() {
 		return gameState.guesses

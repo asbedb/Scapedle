@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { STORAGE_KEY, MAX_GUESSES } from '$lib/constants';
+	import { STORAGE_KEY, MAX_GUESSES, ALPHA_RE, UPPER_RE, NON_UPPER_RE } from '$lib/constants';
 	import { gameState, gameData } from '$lib/stores/gameState.svelte';
 	import GameOverModal from './GameOverModal.svelte';
 	import GameRows from './GameRows.svelte';
@@ -9,10 +9,7 @@
 	import Keyboard from './Keyboard.svelte';
 	import StartOverlay from './StartOverlay.svelte';
 	let inputElement = $state<HTMLInputElement>();
-	const solution = $derived(atob(gameData.solution).replace(/'/g, ''));
-	const targetAlpha = $derived(solution.replace(/[^a-zA-Z]/g, '').toUpperCase());
-	const targetParts = $derived(solution.toUpperCase().split(/\s+/));
-	const totalExpectedLength = $derived(targetParts.join('').length);
+	const totalExpectedLength = $derived(gameData.targetParts.join('').length);
 
 	function focusInput() {
 		if (gameState.status === 'playing' && gameState.gameStarted) {
@@ -28,8 +25,8 @@
 			if (gameState.currentGuess.length === totalExpectedLength) {
 				let isEntireGuessValid = true;
 				let currentIndex: number = 0;
-				for (const part of targetParts) {
-					const cleanPart = part.replace(/[^A-Z]/g, '');
+				for (const part of gameData.targetParts) {
+					const cleanPart = part.replace(NON_UPPER_RE, '');
 					const partLength = cleanPart.length;
 					const guessChunk = gameState.currentGuess.slice(currentIndex, currentIndex + partLength);
 					const validWordsForLen = gameData.dictionary[partLength] || [];
@@ -47,7 +44,7 @@
 				}
 			}
 		} else if (gameState.currentGuess.length < totalExpectedLength && key.length === 1) {
-			if (/[a-zA-Z]/.test(key)) {
+			if (ALPHA_RE.test(key)) {
 				gameState.currentGuess += key.toUpperCase();
 			}
 		}
@@ -59,7 +56,7 @@
 			handleInput('ENTER');
 		} else if (e.key === 'Backspace') {
 			handleInput('BACK');
-		} else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+		} else if (e.key.length === 1 && ALPHA_RE.test(e.key)) {
 			if (document.activeElement !== inputElement) {
 				handleInput(e.key.toUpperCase());
 			}
@@ -70,7 +67,7 @@
 		const val = target.value.toUpperCase();
 		if (val.length > 0) {
 			const char = val[val.length - 1];
-			if (/[A-Z]/.test(char)) handleInput(char);
+			if (UPPER_RE.test(char)) handleInput(char);
 		}
 		target.value = '';
 	}
@@ -109,7 +106,7 @@
 		}
 	});
 	$effect(() => {
-		if (gameState.guesses.includes(targetAlpha)) {
+		if (gameState.guesses.includes(gameData.targetAlpha)) {
 			gameState.status = 'won';
 		} else if (gameState.guesses.length >= MAX_GUESSES) {
 			gameState.status = 'lost';
@@ -129,12 +126,12 @@
 >
 	<div class="mb-4 flex w-full flex-col gap-2 px-2">
 		<InvalidWordAlert />
-		<GameRows {solution} {targetAlpha} />
+		<GameRows />
 	</div>
-	<GameOverModal {solution} {targetAlpha} />
+	<GameOverModal />
 	<div class="flex w-full max-w-md flex-col items-center gap-6">
 		<div class="w-full {gameState.status !== 'playing' ? 'pointer-events-none opacity-50' : ''}">
-			<Keyboard onKey={handleInput} {targetAlpha} />
+			<Keyboard onKey={handleInput} />
 		</div>
 		<HintButton {focusInput} />
 	</div>

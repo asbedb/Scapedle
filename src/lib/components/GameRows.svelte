@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { MAX_GUESSES, isSpecial, BLANK_GUESS } from '$lib/constants';
-	import { gameState } from '$lib/stores/gameState.svelte';
-	let { solution, targetAlpha } = $props<{
-		solution: string;
-		targetAlpha: string;
-	}>();
+	import { MAX_GUESSES, isSpecial, BLANK_GUESS, NON_ALPHA_RE } from '$lib/constants';
+	import { gameState, gameData } from '$lib/stores/gameState.svelte';
+	const solution = $derived(gameData.decodedSolution);
+	const targetAlpha = $derived(gameData.targetAlpha);
 	const rows = $derived(Array.from({ length: MAX_GUESSES }, (_, i) => i));
 	const cols = $derived(Array.from({ length: solution.length }, (_, i) => i));
 
@@ -12,7 +10,7 @@
 	function getLetterAt(rowIndex: number, colIndex: number) {
 		const charInWord = solution[colIndex];
 		if (isSpecial(charInWord)) return charInWord;
-		const alphaIndex = solution.slice(0, colIndex).replace(/[^a-zA-Z]/g, '').length;
+		const alphaIndex = solution.slice(0, colIndex).replace(NON_ALPHA_RE, '').length;
 		const guessAtRow = gameState.guesses[rowIndex];
 		if (guessAtRow === BLANK_GUESS) return '';
 		if (rowIndex < gameState.guesses.length) return guessAtRow[alphaIndex];
@@ -23,7 +21,7 @@
 		if (guess === BLANK_GUESS) return 'bg-zinc-800 border-zinc-900 opacity-40';
 		const charInWord = solution[colIndex];
 		if (isSpecial(charInWord)) return 'border-none text-zinc-500';
-		const alphaIndex = solution.slice(0, colIndex).replace(/[^a-zA-Z]/g, '').length;
+		const alphaIndex = solution.slice(0, colIndex).replace(NON_ALPHA_RE, '').length;
 		const char = guess[alphaIndex];
 		const targetChar = targetAlpha[alphaIndex];
 		if (char === targetChar) return 'bg-green-600 border-green-600 text-white';

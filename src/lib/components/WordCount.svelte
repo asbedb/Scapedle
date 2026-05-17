@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { wordCount } = $props<{ wordCount: number }>();
-	const message: string = `${wordCount} words you can guess!`;
-	const characters = message.split('');
+	const message = $derived(`${wordCount} words you can guess!`);
+	const characters = $derived(message.split(''));
 </script>
 
 <div class="flex w-full items-center justify-center text-center">

@@ -35,6 +35,15 @@ export const gameData = {
 	get solution() {
 		return rawData.itemName;
 	},
+	get decodedSolution() {
+		return atob(rawData.itemName).replace(/'/g, '');
+	},
+	get targetAlpha() {
+		return atob(rawData.itemName).replace(/'/g, '').replace(/[^a-zA-Z]/g, '').toUpperCase();
+	},
+	get targetParts() {
+		return atob(rawData.itemName).replace(/'/g, '').toUpperCase().split(/\s+/);
+	},
 	get emojiHint() {
 		return rawData.emojiHint;
 	},
