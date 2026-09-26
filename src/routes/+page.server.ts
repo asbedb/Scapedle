@@ -24,6 +24,13 @@ const getSeededRandom = (seed: number): number => {
 	return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 
+const getSeed = (year: number, month: number, day: number) => {
+	const date = new Date(Date.UTC(year, month, day));
+	const y = date.getUTCFullYear();
+	const dayOfYear = (date.getTime() - Date.UTC(y, 0, 0)) / 86400000;
+	return { seed: y * 1000 + dayOfYear, dayOfYear };
+};
+
 const { dictionary, wordCount } = processDictionary();
 
 export const load = () => {
@@ -41,20 +48,19 @@ export const load = () => {
 	const month = parseInt(dateMap.month) - 1;
 	const day = parseInt(dateMap.day);
 
-	const aestToday = new Date(year, month, day);
-	const startOfYear = new Date(year, 0, 0);
-	const dayOfYear = Math.floor((aestToday.getTime() - startOfYear.getTime()) / 86400000);
+	const today = getSeed(year, month, day);
+	const yesterday = getSeed(year, month, day - 1);
 
-	const seed: number = year * 1000 + dayOfYear;
-	const randomIndex: number = Math.floor(getSeededRandom(seed) * WORD_LIST.length);
-	const dailyWord = WORD_LIST[randomIndex];
+	const dailyWord = WORD_LIST[Math.floor(getSeededRandom(today.seed) * WORD_LIST.length)];
+	const yesterdaysWord = WORD_LIST[Math.floor(getSeededRandom(yesterday.seed) * WORD_LIST.length)];
 	// Generates a hashmap of individual words extracted from our wordList to optimize searches.
 	// Key = word length, Value = array of unique uppercase words.
 	return {
 		...dailyWord,
 		itemName: btoa(dailyWord.itemName),
-		wordNumber: dayOfYear,
+		wordNumber: today.dayOfYear,
 		dictionary,
-		wordCount
+		wordCount,
+		yesterdaysWord: yesterdaysWord.itemName
 	};
 };

@@ -5,6 +5,7 @@ export interface ExternalData {
 	wordNumber: number;
 	dictionary: Record<number, string[]>;
 	wordCount: number;
+	yesterdaysWord: string;
 }
 
 export interface GameStateType {
@@ -22,7 +23,8 @@ let rawData = $state<ExternalData>({
 	wordHint: '',
 	wordNumber: 0,
 	dictionary: {},
-	wordCount: 0
+	wordCount: 0,
+	yesterdaysWord: ''
 });
 
 export const solution = {
@@ -39,7 +41,10 @@ export const gameData = {
 		return atob(rawData.itemName).replace(/'/g, '');
 	},
 	get targetAlpha() {
-		return atob(rawData.itemName).replace(/'/g, '').replace(/[^a-zA-Z]/g, '').toUpperCase();
+		return atob(rawData.itemName)
+			.replace(/'/g, '')
+			.replace(/[^a-zA-Z]/g, '')
+			.toUpperCase();
 	},
 	get targetParts() {
 		return atob(rawData.itemName).replace(/'/g, '').toUpperCase().split(/\s+/);
@@ -58,6 +63,9 @@ export const gameData = {
 	},
 	get wordCount() {
 		return rawData.wordCount;
+	},
+	get yesterdaysWord() {
+		return rawData.yesterdaysWord;
 	}
 };
 

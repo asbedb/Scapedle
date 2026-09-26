@@ -10,6 +10,7 @@
 	import DiscordEmbed from '$lib/components/DiscordEmbed.svelte';
 	import GitHubEmbed from '$lib/components/GitHubEmbed.svelte';
 	import AboutEmbed from '$lib/components/AboutEmbed.svelte';
+	import YesterdaysWord from '$lib/components/YesterdaysWord.svelte';
 	initStore(data as ExternalData);
 </script>
 
@@ -21,6 +22,7 @@
 		<EmojiHint emojiHint={gameData.emojiHint} />
 		<WordNumber wordNumber={gameData.wordNumber} />
 		<GameBoard />
+		<YesterdaysWord yesterdaysWord={gameData.yesterdaysWord} />
 		<div class="flex justify-center gap-4">
 			<DiscordEmbed />
 			<AboutEmbed />

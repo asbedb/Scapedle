@@ -8,6 +8,7 @@
 	import InvalidWordAlert from './InvalidWordAlert.svelte';
 	import Keyboard from './Keyboard.svelte';
 	import StartOverlay from './StartOverlay.svelte';
+	import GiveUpButton from './GiveUpButton.svelte';
 	let inputElement = $state<HTMLInputElement>();
 	const totalExpectedLength = $derived(gameData.targetParts.join('').length);
 
@@ -133,7 +134,9 @@
 		<div class="w-full {gameState.status !== 'playing' ? 'pointer-events-none opacity-50' : ''}">
 			<Keyboard onKey={handleInput} />
 		</div>
+		<div class="flex gap-2"></div>
 		<HintButton {focusInput} />
+		<GiveUpButton {focusInput} />
 	</div>
 	<input
 		bind:this={inputElement}

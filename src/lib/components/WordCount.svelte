@@ -1,6 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { MOTDS } from '$lib/constants';
 	let { wordCount } = $props<{ wordCount: number }>();
-	const message = $derived(`${wordCount} words - Crafting update is live!`);
+	let tagline = $state(MOTDS[0]);
+	onMount(() => {
+		tagline = MOTDS[Math.floor(Math.random() * MOTDS.length)];
+	});
+
+	const message = $derived(`${wordCount} words - ${tagline}`);
 	const characters = $derived(message.split(''));
 </script>
 
