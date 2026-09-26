@@ -1,0 +1,9 @@
+[Unit]
+Description=Rebuild Scapedle just after midnight Sydney time (new daily word)
+
+[Timer]
+OnCalendar=*-*-* 00:01:00 Australia/Sydney
+Persistent=true
+
+[Install]
+WantedBy=timers.target

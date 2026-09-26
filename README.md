@@ -25,7 +25,7 @@ The game's core logic revolves around a curated wordlist.
 
 Rather than relying on a complex backend database to serve a new word, Scapedle utilizes a static-first deployment strategy:
 
-- **Scheduled CI/CD:** The project is rebuilt daily.
+- **Scheduled Builds:** The project is rebuilt just after midnight (Sydney time) each day by a Docker container on a self-managed host, which publishes to GitHub Pages. See [deploy/README.md](./deploy/README.md).
 - **Deterministic Seeding:** A custom algorithm uses the current date as a seed to select the "Daily Scape." This ensures a canonical order of game numbers and maintains synchronized play across the global community without needing a real-time server.
 
 ## Installation
