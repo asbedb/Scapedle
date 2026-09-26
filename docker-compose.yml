@@ -1,0 +1,15 @@
+services:
+  builder:
+    build: .
+    image: scapedle-builder
+    env_file: .env
+    environment:
+      TZ: Australia/Sydney
+    volumes:
+      - pnpm-store:/pnpm-store
+      - state:/state
+    restart: 'no'
+
+volumes:
+  pnpm-store:
+  state:

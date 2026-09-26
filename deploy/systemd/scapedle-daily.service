@@ -1,0 +1,10 @@
+[Unit]
+Description=Scapedle daily build and deploy
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/scapedle
+ExecStart=/usr/bin/docker compose run --rm builder daily
