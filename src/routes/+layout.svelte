@@ -1,6 +1,6 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '$lib/assets/icons/spell-book.png';
+	import favicon from '#lib/assets/icons/spell-book.png';
 	let { children } = $props();
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { MAX_GUESSES, isSpecial, BLANK_GUESS, NON_ALPHA_RE } from '$lib/constants';
-	import { gameState, gameData } from '$lib/stores/gameState.svelte';
+	import { MAX_GUESSES, isSpecial, BLANK_GUESS, NON_ALPHA_RE } from '#lib/constants.ts';
+	import { gameState, gameData } from '#lib/stores/gameState.svelte.ts';
 	const solution = $derived(gameData.decodedSolution);
 	const targetAlpha = $derived(gameData.targetAlpha);
 	const rows = $derived(Array.from({ length: MAX_GUESSES }, (_, i) => i));

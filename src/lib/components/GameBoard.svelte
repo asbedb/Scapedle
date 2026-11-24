@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { STORAGE_KEY, MAX_GUESSES, ALPHA_RE, UPPER_RE, NON_UPPER_RE } from '$lib/constants';
-	import { gameState, gameData } from '$lib/stores/gameState.svelte';
+	import { STORAGE_KEY, MAX_GUESSES, ALPHA_RE, UPPER_RE, NON_UPPER_RE } from '#lib/constants.ts';
+	import { gameState, gameData } from '#lib/stores/gameState.svelte.ts';
 	import GameOverModal from './GameOverModal.svelte';
 	import GameRows from './GameRows.svelte';
 	import HintButton from './HintButton.svelte';

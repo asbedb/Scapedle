@@ -1,5 +1,5 @@
 <script lang="ts">
-	import spellBook from '$lib/assets/icons/spell-book.png';
+	import spellBook from '#lib/assets/icons/spell-book.png';
 	import RoundedFrame from './RoundedFrame.svelte';
 </script>
 

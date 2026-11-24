@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { gameData, gameState } from '$lib/stores/gameState.svelte';
+	import { gameData, gameState } from '#lib/stores/gameState.svelte.ts';
 	import Keyboard from './Keyboard.svelte';
-	import { MAX_GUESSES, BLANK_GUESS, STORAGE_KEY, isSpecial } from '$lib/constants';
+	import { MAX_GUESSES, BLANK_GUESS, STORAGE_KEY, isSpecial } from '#lib/constants.ts';
 	const solution = $derived(atob(gameData.solution).replace(/'/g, ''));
 	const targetParts = $derived(solution.toUpperCase().split(/\s+/));
 	const totalExpectedLength = $derived(targetParts.join('').length);

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { gameState, gameData } from '$lib/stores/gameState.svelte';
-	import { BLANK_GUESS } from '$lib/constants';
+	import { gameState, gameData } from '#lib/stores/gameState.svelte.ts';
+	import { BLANK_GUESS } from '#lib/constants.ts';
 	const charStatuses = $derived.by(() => {
 		const targetAlpha = gameData.targetAlpha;
 		const statuses: Record<string, string> = {};
@@ -43,9 +43,9 @@
 
 		return statuses;
 	});
-	let { onKey } = $props<{
+	let { onKey }: {
 		onKey: (key: string) => void;
-	}>();
+	} = $props();
 
 	const rows = [
 		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],

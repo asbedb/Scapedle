@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gameState } from '$lib/stores/gameState.svelte';
+	import { gameState } from '#lib/stores/gameState.svelte.ts';
 </script>
 
 {#if gameState.invalidWord}

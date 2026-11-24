@@ -1,4 +1,4 @@
-import { WORD_LIST } from '$lib/server/wordList';
+import { WORD_LIST } from '#lib/server/wordList.ts';
 
 const processDictionary = () => {
 	const dict: Record<number, string[]> = {};
