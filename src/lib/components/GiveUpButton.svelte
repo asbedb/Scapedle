@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { gameState } from '$lib/stores/gameState.svelte';
-	import { BLANK_GUESS, MAX_GUESSES } from '$lib/constants';
-	let { focusInput } = $props<{
+	import { gameState } from '#lib/stores/gameState.svelte.ts';
+	import { BLANK_GUESS, MAX_GUESSES } from '#lib/constants.ts';
+	let { focusInput }: {
 		focusInput: () => void;
-	}>();
+	} = $props();
 	function giveUp() {
 		if (gameState.status !== 'playing') return;
 		const remaningGuesses: number = MAX_GUESSES - gameState.guesses.length;

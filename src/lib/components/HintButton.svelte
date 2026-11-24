@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { gameData, gameState } from '$lib/stores/gameState.svelte';
-	import { BLANK_GUESS } from '$lib/constants';
-	let { focusInput } = $props<{
+	import { gameData, gameState } from '#lib/stores/gameState.svelte.ts';
+	import { BLANK_GUESS } from '#lib/constants.ts';
+	let { focusInput }: {
 		focusInput: () => void;
-	}>();
+	} = $props();
 	function useHint() {
 		if (gameState.status !== 'playing' || gameState.hintUsed || !gameData.wordHint) return;
 		gameState.guesses.push(BLANK_GUESS);

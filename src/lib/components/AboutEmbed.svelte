@@ -1,5 +1,5 @@
 <script lang="ts">
-	import aboutLogo from '$lib/assets/icons/about.png';
+	import aboutLogo from '#lib/assets/icons/about.png';
 </script>
 
 <a

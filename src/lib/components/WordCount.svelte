@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { MOTDS } from '$lib/constants';
-	let { wordCount } = $props<{ wordCount: number }>();
+	import { MOTDS } from '#lib/constants.ts';
+	let { wordCount }: { wordCount: number } = $props();
 	let tagline = $state(MOTDS[0]);
 	onMount(() => {
 		tagline = MOTDS[Math.floor(Math.random() * MOTDS.length)];

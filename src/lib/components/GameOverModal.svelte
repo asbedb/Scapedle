@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { gameState, gameData } from '$lib/stores/gameState.svelte';
-	import { MAX_GUESSES, BLANK_GUESS } from '$lib/constants';
+	import { gameState, gameData } from '#lib/stores/gameState.svelte.ts';
+	import { MAX_GUESSES, BLANK_GUESS } from '#lib/constants.ts';
 	const solution = $derived(gameData.decodedSolution);
 	const targetAlpha = $derived(gameData.targetAlpha);
 	let copied = $state(false);

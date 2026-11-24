@@ -1,5 +1,5 @@
 <script lang="ts">
-	import gitHubLogo from '$lib/assets/icons/github.png';
+	import gitHubLogo from '#lib/assets/icons/github.png';
 </script>
 
 <a

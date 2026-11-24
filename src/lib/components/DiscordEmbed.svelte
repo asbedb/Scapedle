@@ -1,5 +1,5 @@
 <script lang="ts">
-	import discordLogo from '$lib/assets/icons/discord.png';
+	import discordLogo from '#lib/assets/icons/discord.png';
 </script>
 
 <a
