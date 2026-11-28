@@ -1,0 +1,1 @@
+body{-webkit-tap-highlight-color:transparent;background-color:#09090b}.wavy.svelte-tpltxn{animation:1s infinite svelte-tpltxn-wavy;display:inline-block;position:relative}@keyframes svelte-tpltxn-wavy{0%,to{transform:translateY(0)}50%{transform:translateY(-5px)}}
